@@ -38,6 +38,6 @@ franka.control_dofs_postion(
             torch.tensor([0,0,0,-1.0,0,1.0,0,0.02,0.02],device=gs.device),(3000,1)
     ),
 )
-
+#returns the steps for 1000 times 
 for i in range(1000):
     scene.step()
