@@ -1,0 +1,20 @@
+# ignore ALL env folders
+gs-env/
+gs11-env/
+.env/
+
+# python cache
+__pycache__/
+*.pyc
+
+# compiled libs
+*.so
+*.dll
+*.dylib
+*.pyd
+*.whl
+*.dist-info/
+*.egg-info/
+
+
+
