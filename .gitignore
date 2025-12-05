@@ -1,16 +1,13 @@
-# virtual environments
 gs-env/
 gs11-env/
-venv/
-.env/
-*.egg-info/
-*.dist-info/
-
-# python cache
 __pycache__/
 *.pyc
-*.pyd
 *.so
+*.pyd
+*.dll
+*.dylib
+*.dist-info/
+*.egg-info/
 
 
 
