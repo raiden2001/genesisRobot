@@ -2,9 +2,12 @@
 # create n_evns scene
 
 import genesis as gs 
+#from genesis import world,physics
 import torch
 ################ init ##########################
-gs.init(backend=gs.gpu)
+#gs.init(backend=gs.gpu)
+
+gs.init(backend=gs.cpu)
 ############################## create a scene #####################
 scene = gs.scene(
     show_viewer = True,
@@ -27,6 +30,25 @@ plane = scene.add_entity(
 franka = scene.add_entity(
     gs.morphs.MJCF(file = 'xml/franka_emika_panda/panda.xml'),
 )
+
+cam = scene.add_camera(
+    res = (640,480),
+    pos = (3.5,0.0,2.5),
+    lookat =(0,0,0.5),
+    fov -30,
+    GUI =False
+)
+
+scene.build()
+#render rgb,depth,segmentation and normal
+#rgb,depth, segmentation,normal = cam.render(rgb=True,depth=True,segmentation=True,normal=True)
+cam.start_recording()
+import numpy as numpy
+
+for i in range(120):
+    scene.step()
+    cam.render()
+cam.stop_recording(save_to_filename='video.mp4',fps=60)
 ################################ build ###########################
 # create 20 parallel environments
 B=20
