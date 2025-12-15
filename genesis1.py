@@ -2,23 +2,30 @@
 # create n_evns scene
 
 import genesis as gs 
+import numpy as np
 #from genesis import world,physics
 import torch
 ################ init ##########################
 #gs.init(backend=gs.gpu)
 
-gs.init(backend=gs.cpu)
+gs.init(backend=gs.gpu)
 ############################## create a scene #####################
 scene = gs.scene(
     show_viewer = True,
+    sim_options = gs.options.SimOptions(
+        dt = 0.01,
+    ),
+
     viewer_options = gs.options.ViewerOptions(
         camera_pos = (3.5,-1.0,2.5),
         camera_lookat = (0.0,0.0,0.5),
-        camera_fov = 40,
+        camera_fov    =  40,
+        max_FPS       =  60,
     ),
-    rigid_options = gs.options.RigidOptions(
-        dt                  = 0.01,            
-    ),
+    show_viewer = True,
+    #rigid_options = gs.options.RigidOptions(
+     #   dt                  = 0.01,            
+    #),
                  
 )
 
@@ -28,8 +35,13 @@ plane = scene.add_entity(
 )
 
 franka = scene.add_entity(
-    gs.morphs.MJCF(file = 'xml/franka_emika_panda/panda.xml'),
+    gs.morphs.MJCF(
+    file = 'xml/franka_emika_panda/panda.xml',
+    pos = (1.0,1.0,0.0),
+    euler = (0,0,0),
+    ),
 )
+
 
 cam = scene.add_camera(
     res = (640,480),
@@ -43,18 +55,22 @@ scene.build()
 #render rgb,depth,segmentation and normal
 #rgb,depth, segmentation,normal = cam.render(rgb=True,depth=True,segmentation=True,normal=True)
 cam.start_recording()
-import numpy as numpy
+
 
 for i in range(120):
     scene.step()
     cam.render()
 cam.stop_recording(save_to_filename='video.mp4',fps=60)
+###################### entities ######################################3
+plane = scene.add_entity(
+    gs.morphs.Plane(),
+)
 ################################ build ###########################
 # create 20 parallel environments
 B=20
 scene.build(n_envs=B,env_spacing=(1.0,1.0))
 
-#control all robots
+#control all robots 
 franka.control_dofs_postion(
         torch.tile(
             torch.tensor([0,0,0,-1.0,0,1.0,0,0.02,0.02],device=gs.device),(3000,1)
