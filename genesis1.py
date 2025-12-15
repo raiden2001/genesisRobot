@@ -65,6 +65,19 @@ cam.stop_recording(save_to_filename='video.mp4',fps=60)
 plane = scene.add_entity(
     gs.morphs.Plane(),
 )
+########################### PID Joints#####################################
+jnt_names = [
+    'joint1',
+    'joint2',
+    'joint3',
+    'joint4',
+    'joint5',
+    'joint6',
+    'joint7',
+    'finger_joint1',
+    'finger_joint2',
+]                                   # To obtain local idx of dof with respect to the robot robot itself        
+dofs_idx = [franka.get_joint(name).dof_idx_local for name in jnt_names]
 ################################ build ###########################
 # create 20 parallel environments
 B=20
