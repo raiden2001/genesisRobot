@@ -65,6 +65,9 @@ cam.stop_recording(save_to_filename='video.mp4',fps=60)
 plane = scene.add_entity(
     gs.morphs.Plane(),
 )
+
+
+
 ########################### PID Joints#####################################
 jnt_names = [
     'joint1',
@@ -78,6 +81,67 @@ jnt_names = [
     'finger_joint2',
 ]                                   # To obtain local idx of dof with respect to the robot robot itself        
 dofs_idx = [franka.get_joint(name).dof_idx_local for name in jnt_names]
+
+############ Optional: set control gains ############
+# set positional gains
+franka.set_dofs_kp(
+    kp             = np.array([4500, 4500, 3500, 3500, 2000, 2000, 2000, 100, 100]),
+    dofs_idx_local = dofs_idx,
+)
+# set velocity gains
+franka.set_dofs_kv(
+    kv             = np.array([450, 450, 350, 350, 200, 200, 200, 10, 10]),
+    dofs_idx_local = dofs_idx,
+)
+# set force range for safety
+franka.set_dofs_force_range(
+    lower          = np.array([-87, -87, -87, -87, -12, -12, -12, -100, -100]),
+    upper          = np.array([ 87,  87,  87,  87,  12,  12,  12,  100,  100]),
+    dofs_idx_local = dofs_idx,
+)
+
+#########################################hard reset############################## 
+for i in range(150):
+    if i < 50:
+        franka.set_dofs_position(np.array([1,1,0,0,0,0,0,0.04,0.04]),dofs_idx)
+    elif i < 100:
+        franka.set_dofs_position(np.array([-1,0.8,1,-2,1,0.5,-0.5,0.04,0.04]),dofs_idx)
+    else:
+        franka.set_dofs_position(np.array([0,0,0,0,0,0,0,0,0]),dofs_idx)
+    scene.step()    
+
+############## PD Control ########################3
+
+control_phases ={
+    "reached_out" :{
+    "step":0,
+    "type": "position",
+    "target": [1, 1, 0, 0, 0, 0, 0, 0.04, 0.04],
+    "dofs":dofs_idx,
+    },
+    "grasp_pose":{
+    "step": 250,
+    "type": "position",
+    "target":[-1, 0.8, 1, -2, 1, 0.5, -0.5, 0.04, 0.04],
+    "dofs": dofs_idx
+    },
+    "home" :{
+    "step" : 500,
+    "type":"position",
+    "target"[0]*9,
+    "dofs":dofs_idx,
+    },
+    "split"
+
+
+}
+
+franka.control_dofs_postion = {
+
+
+
+
+}
 ################################ build ###########################
 # create 20 parallel environments
 B=20
