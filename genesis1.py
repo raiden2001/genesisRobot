@@ -128,20 +128,44 @@ control_phases ={
     "home" :{
     "step" : 500,
     "type":"position",
-    "target"[0]*9,
+    "target":[0]*9,
     "dofs":dofs_idx,
     },
-    "split"
+    "split":{
+    "step": 750,
+    "type":"Mixed",
+    "target":[0]*8,
+    "pos_dofs":dofs_idx[1:],
+    "vel_target":[1,0],
+    "vel_dofs": dofs_idx[:1]   
+
+    },
+    "final":{
+    "step":1000,
+    "type":"force",
+    "target":[0]*9,
+    "dofs":dofs_idx
+    }
 
 
 }
 
-franka.control_dofs_postion = {
+for i in range(1250):
+    for phrase_name,config,control_phases.items():
+        if i == config["step"]:
+            if i == config["type"] == "position":
+                franka.control_dofs_postion(np.array(config["reached_out"]),config["target"])
+            elif config["type"] == "mixed":
+                franka.control_dofs_postion(np.array(config["vel_target"]),config["vel_dofs"])
+            elif config["type"] == "force":
+                franka.control_dofs_postion(np.array(config["target"]),config["dofs"])
+            print(f"activted phase:{phrase_name}")
+            break
+    #Diagnostics
+    if i % 1000 = 0:
+        print(f"Step {i} | COntrol force:", franka.get_dofs_control_force(dofs_idx))
 
-
-
-
-}
+    scene.step()
 ################################ build ###########################
 # create 20 parallel environments
 B=20
