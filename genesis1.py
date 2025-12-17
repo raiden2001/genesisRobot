@@ -157,6 +157,7 @@ for i in range(1250):
                 franka.control_dofs_postion(np.array(config["reached_out"]),config["target"])
             elif config["type"] == "mixed":
                 franka.control_dofs_postion(np.array(config["vel_target"]),config["vel_dofs"])
+                franka.control_dofs_postion(np.array(config["pos_target"]),config["pos_dofs"])
             elif config["type"] == "force":
                 franka.control_dofs_postion(np.array(config["target"]),config["dofs"])
             print(f"activted phase:{phrase_name}")
