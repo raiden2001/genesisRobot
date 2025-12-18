@@ -37,6 +37,9 @@ plane = scene.add_entity(
     gs.morphs.Plane(),
 )
 
+# plane = scene.add_entity(
+#     gs.morphs.Plane(),
+# )
 franka = scene.add_entity(
     gs.morphs.MJCF(
     file = 'xml/franka_emika_panda/panda.xml',
@@ -64,14 +67,9 @@ for i in range(120):
     scene.step()
     cam.render()
 cam.stop_recording(save_to_filename='video.mp4',fps=60)
-###################### entities ######################################3
-plane = scene.add_entity(
-    gs.morphs.Plane(),
-)
 
 
-
-########################### PID Joints#####################################
+########################### PID Joints Build #####################################
 jnt_names = [
     'joint1',
     'joint2',
