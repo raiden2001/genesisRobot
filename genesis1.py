@@ -133,7 +133,7 @@ control_phases ={
     },
     "split":{
     "step": 750,
-    "type":"Mixed",
+    "type":"mixed",
     "target":[0]*8,
     "pos_dofs":dofs_idx[1:],
     "vel_target":[1,0],
@@ -152,16 +152,17 @@ control_phases ={
 
 for i in range(1250):
     for phrase_name,config,control_phases.items():
-        if i == config["step"]:
+        if i = config["step"]:
             if i == config["type"] == "position":
-                franka.control_dofs_postion(np.array(config["reached_out"]),config["target"])
+                franka.control_dofs_postion(np.array(config["reached-out"]),config["target"])
             elif config["type"] == "mixed":
-                franka.control_dofs_postion(np.array(config["vel_target"]),config["vel_dofs"])
                 franka.control_dofs_postion(np.array(config["pos_target"]),config["pos_dofs"])
-            elif config["type"] == "force":
-                franka.control_dofs_postion(np.array(config["target"]),config["dofs"])
-            print(f"activted phase:{phrase_name}")
+                franka.control_dofs_postion(np.array(config["vel_target"]),config["vel_dofs"])
+            elif config["final"] == "force":
+                frank.control_dofs_postion(np.array(config["force"]),config["dofs"])
             break
+            print(f"activate: phrase name:{phrase_name}")
+
     #Diagnostics
     if i % 1000 = 0:
         print(f"Step {i} | COntrol force:", franka.get_dofs_control_force(dofs_idx))
