@@ -11,7 +11,7 @@ import torch
 gs.init(backend=gs.gpu)
 ############################## create a scene #####################
 scene = gs.scene(
-    show_viewer = True,
+    #show_viewer = True,
     sim_options = gs.options.SimOptions(
         dt = 0.01,
     ),
@@ -21,6 +21,9 @@ scene = gs.scene(
         camera_lookat = (0.0,0.0,0.5),
         camera_fov    =  40,
         max_FPS       =  60,
+    ),
+    sim_options = gs.options.SimOptions(
+        dt = 0.01,
     ),
     show_viewer = True,
     #rigid_options = gs.options.RigidOptions(
