@@ -165,7 +165,7 @@ for i in range(1250):
            
 
     #Diagnostics
-    if i % 1000 = 0:
+    if i % 1000 == 0:
         print(f"Step {i} | COntrol force:", franka.get_dofs_control_force(dofs_idx))
 
     scene.step()
