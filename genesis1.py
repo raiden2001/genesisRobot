@@ -160,8 +160,9 @@ for i in range(1250):
                 franka.control_dofs_postion(np.array(config["vel_target"]),config["vel_dofs"])
             elif config["final"] == "force":
                 frank.control_dofs_postion(np.array(config["force"]),config["dofs"])
-            break
             print(f"activate: phrase name:{phrase_name}")
+            break
+           
 
     #Diagnostics
     if i % 1000 = 0:
