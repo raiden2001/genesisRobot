@@ -151,7 +151,7 @@ control_phases ={
 }
 
 for i in range(1250):
-    for phase_name,config,control_phases.items():
+    for phase_name,config in control_phases.items():
         if i = config["step"]:
             if i == config["type"] == "position":
                 franka.control_dofs_postion(np.array(config["reached-out"]),config["target"])
