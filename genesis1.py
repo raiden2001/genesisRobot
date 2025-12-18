@@ -161,7 +161,7 @@ for i in range(1250):
             elif config["final"] == "force":
                 frank.control_dofs_postion(np.array(config["force"]),config["dofs"])
             print(f"activate: phrase name:{phase_name}")
-            break
+            break # break the loop
            
 
     #Diagnostics
