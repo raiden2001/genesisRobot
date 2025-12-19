@@ -184,3 +184,5 @@ franka.control_dofs_postion(
 #returns the steps for 1000 times each step
 for i in range(1000):
     scene.step()
+
+    #test
