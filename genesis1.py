@@ -12,9 +12,9 @@ gs.init(backend=gs.gpu)
 ############################## create a scene #####################
 scene = gs.scene(
     #show_viewer = True,
-    sim_options = gs.options.SimOptions(
-        dt = 0.01,
-    ),
+    # sim_options = gs.options.SimOptions(
+    #     dt = 0.01,
+    # ),
 
     viewer_options = gs.options.ViewerOptions(
         camera_pos = (3.5,-1.0,2.5),
