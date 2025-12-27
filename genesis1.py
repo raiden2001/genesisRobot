@@ -258,8 +258,7 @@ for waypoint in path:
     franka.control_dofs_position(waypoint)
     scene.step() #finalize the scene
 
-#allow robot to reach last waypoint
+#allow robot to reach last waypoint nad point 
 for i in range(100):
     scene.step()
 
-    
