@@ -23,9 +23,15 @@ scene = gs.scene(
         max_FPS       =  60,
     ),
     sim_options = gs.options.SimOptions(
+        substeps = 10,
         dt = 0.01,
     ),
-    show_viewer = True,
+
+    sim_options = gs.options.SimOptions(
+        lower_bound =(-0.5,-0.5,0.0)
+        upper_bound = (0.5,0.5,1),
+        particle_size = 0.01,
+        show_viewer = True,
     #rigid_options = gs.options.RigidOptions(
      #   dt                  = 0.01,            
     #),
